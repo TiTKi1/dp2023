@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/tanks")
-public class JsonServlet extends HttpServlet {
+public final class JsonServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, @NotNull HttpServletResponse response) throws IOException {
         Tanks tank = new Tanks("Леклерк", 1500, 550, 71, "./assets/img/2.jpg");
