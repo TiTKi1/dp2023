@@ -10,50 +10,43 @@ import org.springframework.web.client.ResourceAccessException;
 
 import java.util.List;
 @RestController
-@RequestMapping("/api/officers")
+@RequestMapping("/api/rockets")
 @Slf4j
 public class RocketController {
     @Autowired
-    RocketRepository RocketRepository;
+    RocketRepository rocketRepository;
     @GetMapping("/get")
-    public List<RocketEntity> getEntities(){
+    public List<RocketEntity> getEntities() {
         List<RocketEntity> list;
-        log.info("[OFFICER CONTROLLER] Before GET");
-        list = RocketRepository.findAll();
-        log.info("[OFFICER CONTROLLER] After GET Found {} officers", list.size());
+        log.info("[ROCKET CONTROLLER] Before GET");
+        list = rocketRepository.findAll();
+        log.info("[ROCKET CONTROLLER] After GET Found {} Rockets", list.size());
         return list;
-        @PostMapping("/post")
-        @ResponseStatus(HttpStatus.CREATED)
-        public RocketEntity postEntity(@RequestBody RocketEntity RocketEntity){
-            log.info("[OFFICER CONTROLLER] After POST Found new officer {} ", RocketEntity);
-            return officerRepository.save(RocketEntity);
+
         }
         @PostMapping("/post")
         @ResponseStatus(HttpStatus.CREATED)
-        public RocketEntity postEntity(@RequestBody RocketEntity RocketEntity){
-            log.info("[OFFICER CONTROLLER] After POST Found new officer {} ", RocketEntity);
-            return RocketRepository.save(RocketEntity);
+        public RocketEntity postEntity(@RequestBody RocketEntity rocketEntity){
+            log.info("[ROCKET CONTROLLER] After POST Found new rocket {} ", rocketEntity);
+            return rocketRepository.save(rocketEntity);
         }
 
         @PutMapping("/update/{id}")
         public RocketEntity putEntity(@PathVariable long id, @RequestBody RocketEntity newEntity){
-            RocketEntity updatedEntity = RocketRepository.findById(id)
+            RocketEntity updatedEntity = rocketRepository.findById(id)
                     .orElseThrow(() -> new ResourceAccessException("Not found OfficerEntity with id: " + id));
             updatedEntity.setName(newEntity.getName());
-            updatedEntity.setCaliber(newEntity.getCaliber());
-            updatedEntity.setMass(newEntity.getMass());
             updatedEntity.setImg(newEntity.getImg());
-            updatedEntity.setCapacity(newEntity.getCapacity());
             updatedEntity.setPrice(newEntity.getPrice());
             log.info("[ROCKET CONTROLLER] After PUT Found updated officer {} ", updatedEntity);
-            return RocketRepository.save(updatedEntity);
+            return rocketRepository.save(updatedEntity);
         }
 
         @DeleteMapping("/delete/{id}")
         public void deleteEntity(@PathVariable long id){
-            RocketEntity deletedEntity = RocketRepository.findById(id)
-                    .orElseThrow(()-> new ResourceAccessException("Not found pistols with id: "+id));
-            log.info("[PISTOL CONTROLLER] After DELETE Found deleted pistol {} ", deletedEntity);
-            RocketRepository.deleteById(id);
+            RocketEntity deletedEntity = rocketRepository.findById(id)
+                    .orElseThrow(()-> new ResourceAccessException("Not found rockets with id: "+id));
+            log.info("[ROCKET CONTROLLER] After DELETE Found deleted rocket {} ", deletedEntity);
+            rocketRepository.deleteById(id);
         }
     }
